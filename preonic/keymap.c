@@ -4,7 +4,6 @@
 
 enum layers {
     _QWERTY,
-    _SHIFT_QWERTY,
     _FN,
     _LOWER,
     _RAISE,
@@ -13,7 +12,6 @@ enum layers {
 
 enum preonic_keycodes {
     QWERTY = SAFE_RANGE,
-    SHIFT_QWERTY,
     FN,
     LOWER,
     RAISE
@@ -21,10 +19,16 @@ enum preonic_keycodes {
 
 
 const key_override_t pnd_key_override = ko_make_basic(MOD_MASK_SHIFT, UK_PND, UK_EURO);
+const key_override_t two_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_2, UK_AT);
+const key_override_t three_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_3, UK_HASH);
+const key_override_t quot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_QUOT, UK_DQUO);
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &pnd_key_override,
+    &two_key_override,
+    &three_key_override,
+    &quot_key_override,
     NULL // Null terminate the array of overrides!
 };
 
@@ -48,31 +52,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_EQUAL, 
 KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
 KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-MO(_SHIFT_QWERTY),KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
 KC_LCTL, MO(_FN), KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
-
-/* (Shifted) Qwerty
- * ,-----------------------------------------------------------------------------------------------.
- * |   ~   |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   (   |   )   |   +   |
- * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |  Tab  |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   |  Del  |
- * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |  Esc  |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   :   |   "   |
- * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | Shift |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   ?   | Enter |
- * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | Ctrl  |  Fn   |  Alt  |  GUI  | Lower |     Space     | Raise | Left  | Down  |  Up   | Right |
- * `-----------------------------------------------------------------------------------------------'
- */
-[_SHIFT_QWERTY] = LAYOUT_preonic_grid(
-KC_TILD, KC_EXLM, UK_AT,   UK_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, S(KC_8),    KC_LPRN,   KC_RPRN,    S(KC_EQUAL),  
-KC_TAB,  S(KC_Q), S(KC_W), S(KC_E), S(KC_R), S(KC_T), S(KC_Y), S(KC_U), S(KC_I),    S(KC_O),   S(KC_P),    KC_DEL,
-KC_ESC,  S(KC_A), S(KC_S), S(KC_D), S(KC_F), S(KC_G), S(KC_H), S(KC_J), S(KC_K),    S(KC_L),   S(KC_SCLN), UK_DQUO,
-_______, S(KC_Z), S(KC_X), S(KC_C), S(KC_V), S(KC_B), S(KC_N), S(KC_M), S(KC_COMM), S(KC_DOT), S(KC_SLSH), KC_ENT,
-KC_LCTL, MO(_FN), KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT,    KC_DOWN,   KC_UP,      KC_RGHT
-),
-
 
 /* Fn
  * ,-----------------------------------------------------------------------------------------------.
