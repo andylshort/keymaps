@@ -1,3 +1,11 @@
 #!/bin/bash
-ln -sfvn $HOME/projects/keymaps/preonic $HOME/qmk_firmware/keyboards/preonic/keymaps/andylshort
-ln -sfvn $HOME/projects/keymaps/ferris  $HOME/qmk_firmware/keyboards/ferris/keymaps/andylshort
+set -e
+if [ ! -d "$QMK_FIRMWARE_DIR" ]; then
+    echo "QMK_FIRMWARE_DIR environment variable not set."
+    echo "Please set this and try again."
+    exit 1
+fi
+CWD=$(pwd)
+ln -sfvn $CWD/preonic $QMK_FIRMWARE_DIR/keyboards/preonic/keymaps/andylshort
+ln -sfvn $CWD/ferris  $QMK_FIRMWARE_DIR/keyboards/ferris/keymaps/andylshort
+
