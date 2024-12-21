@@ -1,2 +1,1 @@
-KEY_OVERRIDE_ENABLE = yes
-FORCE_NKRO = yes
+SRC += features/custom_shift_keys.c

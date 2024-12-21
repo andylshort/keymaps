@@ -1,6 +1,17 @@
 #include QMK_KEYBOARD_H
 
+#include "features/custom_shift_keys.h"
 #include "keymap_uk.h"
+
+// Courtesy of: https://getreuer.info/posts/keyboards/custom-shift-keys/index.html
+const custom_shift_key_t custom_shift_keys[] = {
+  {UK_PND , UK_EURO}, // Shift . is ?
+  {KC_2, UK_AT}, // Shift , is !
+  {KC_3, UK_HASH }, // Shift - is =
+  {KC_QUOT, UK_DQUO}, // Shift : is ; 
+};
+uint8_t NUM_CUSTOM_SHIFT_KEYS =
+    sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
 enum layers {
     _QWERTY,
@@ -16,22 +27,6 @@ enum preonic_keycodes {
     LOWER,
     RAISE
 };
-
-
-const key_override_t pnd_key_override = ko_make_basic(MOD_MASK_SHIFT, UK_PND, UK_EURO);
-const key_override_t two_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_2, UK_AT);
-const key_override_t three_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_3, UK_HASH);
-const key_override_t quot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_QUOT, UK_DQUO);
-
-// This globally defines all key overrides to be used
-const key_override_t **key_overrides = (const key_override_t *[]){
-    &pnd_key_override,
-    &two_key_override,
-    &three_key_override,
-    &quot_key_override,
-    NULL // Null terminate the array of overrides!
-};
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -144,6 +139,8 @@ _______, _______, _______, _______, _______, _______, _______, _______, _______,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Custom shift key behaviour
+    if (!process_custom_shift_keys(keycode, record)) { return false; }
     switch (keycode) {
          case QWERTY:
               if (record->event.pressed) {
@@ -175,16 +172,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (clockwise) {
-         register_code(KC_PGDN);
-         unregister_code(KC_PGDN);
-    } else {
-         register_code(KC_PGUP);
-         unregister_code(KC_PGUP);
-    }
-    return true;
-}
+// bool encoder_update_user(uint8_t index, bool clockwise) {
+//     if (clockwise) {
+//          register_code(KC_PGDN);
+//          unregister_code(KC_PGDN);
+//     } else {
+//          register_code(KC_PGUP);
+//          unregister_code(KC_PGUP);
+//     }
+//     return true;
+// }
 
 bool dip_switch_update_user(uint8_t index, bool active) {
     switch (index) {
