@@ -1,7 +1,6 @@
 #pragma once
 
-// Pick good defaults for enabling homerow modifiers
-#define TAPPING_TERM 350
-// #define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
-// #define TAPPING_FORCE_HOLD
+#define TAPPING_TERM 300
+
+// Enable N-key Rollover
+#define FORCE_NKRO
