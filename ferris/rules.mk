@@ -1,4 +1,4 @@
-# BOOTLOADER = stm32-dfu
+BOOTLOADER = stm32-dfu
 
 # KEY_OVERRIDE_ENABLE = yes
 
